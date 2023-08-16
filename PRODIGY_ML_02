@@ -1,0 +1,39 @@
+import numpy as np
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+import matplotlib.pyplot as plt
+
+# Simulated data: replace this with your actual dataset
+# Each row represents a customer and their purchase history
+# Each column represents a different product/category
+data = np.array([
+    [10, 5, 2, 0, 0],
+    [2, 8, 0, 10, 0],
+    [0, 0, 15, 2, 8],
+    [8, 3, 0, 0, 12],
+    [0, 0, 0, 15, 5]
+])
+
+# Standardize the data to have zero mean and unit variance
+scaler = StandardScaler()
+scaled_data = scaler.fit_transform(data)
+
+# Create a KMeans clustering model with the desired number of clusters
+num_clusters = 3
+kmeans = KMeans(n_clusters=num_clusters, random_state=42)
+
+# Fit the model to the scaled data
+kmeans.fit(scaled_data)
+
+# Get the cluster labels for each data point
+cluster_labels = kmeans.labels_
+
+# Print the cluster labels
+print("Cluster Labels:", cluster_labels)
+
+# Plot the data points colored by their cluster labels
+plt.scatter(scaled_data[:, 0], scaled_data[:, 1], c=cluster_labels, cmap='rainbow')
+plt.xlabel('Feature 1')
+plt.ylabel('Feature 2')
+plt.title('K-Means Clustering')
+plt.show()
